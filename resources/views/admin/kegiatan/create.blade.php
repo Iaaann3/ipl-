@@ -37,12 +37,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="lokasi" class="form-label">Tanggal</label>
-                    <input type="text" name="lokasi" id="lokasi" class="form-control @error('tanggal') is-invalid @enderror" value="{{ old('tanggal') }}">
-                    @error('tanggal')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+    <label for="tanggal" class="form-label">Tanggal</label>
+    <input type="date" name="tanggal" id="tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{ old('tanggal') }}">
+    @error('tanggal')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
 
                 <div class="mb-3">
                     <label for="gambar" class="form-label">Gambar</label>

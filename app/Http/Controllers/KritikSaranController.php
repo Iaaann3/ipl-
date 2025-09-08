@@ -10,10 +10,9 @@ class KritikSaranController extends Controller
 {
     public function index()
     {
-    $kritiks = KritikSaran::with('user')->where('id_user', auth()->id())->latest()->paginate(10);
-
+        $kritiks = KritikSaran::with('user')->latest()->paginate(10);
         return view('admin.saran.index', compact('kritiks'));
-    }
+    }   
 
     public function create()
     {

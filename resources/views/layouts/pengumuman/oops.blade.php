@@ -1,3 +1,5 @@
+@extends('layouts.user')
+@section('content')
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -520,44 +522,9 @@
             </div>
         </div>
 
-        <div class="announcement-text">
-            <div class="announcement-badge">
-                ⚠️ PENGUMUMAN PENTING
-            </div>
-            <h1 class="announcement-title">Pengumuman</h1>
-            <p class="announcement-message">
-                Terdapat pemeliharaan sistem terjadwal yang akan mempengaruhi layanan aplikasi. Mohon perhatikan informasi detail di bawah ini.
-            </p>
-            
-            <div class="announcement-details">
-                <div class="detail-item">
-                    <div class="detail-icon">📅</div>
-                    <div><strong>Tanggal:</strong> 8 September 2025</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-icon">⏰</div>
-                    <div><strong>Waktu:</strong> 01:00 - 05:00 WIB</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-icon">🔧</div>
-                    <div><strong>Jenis:</strong> Pemeliharaan Sistem & Update Database</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-icon">📱</div>
-                    <div><strong>Dampak:</strong> Aplikasi tidak dapat diakses sementara</div>
-                </div>
-            </div>
-
-            <div class="action-buttons">
-                <a href="#" class="btn btn-primary" onclick="showDetails()">
-                    <span>📋</span>
-                    Detail Lengkap
-                </a>
-                <a href="javascript:history.back()" class="btn btn-secondary">
-                    <span>←</span>
-                    Kembali
-                </a>
-            </div>
+        <div class="error-text">
+            <h1 class="oops-title">Oops...</h1>
+            <p class="error-message">Tidak ada pengumuman ditemukan.</p>
         </div>
     </div>
 
@@ -648,3 +615,4 @@
     </script>
 </body>
 </html>
+@endsection

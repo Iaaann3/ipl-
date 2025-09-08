@@ -7,7 +7,7 @@
     <div class="card w-100 mt-2" style="max-width:1200px;">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-hover align-middle">
+                <table class="table table-striped table-hol;ver align-middle">
                     <thead class="bg-primary text-white text-center">
                         <tr>
                             <th>No</th>
@@ -21,8 +21,8 @@
                         @forelse($kritiks as $saran)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $saran->nama }}</td>
-                                <td>{{ $saran->email }}</td>
+                                <td>{{ $saran->user->name ?? '-' }}</td>
+                                <td>{{ $saran->user->email ?? '-' }}</td>
                                 <td>{{ Str::limit($saran->isi, 50, '...') }}</td>
                                 <td>{{ $saran->created_at->format('d-m-Y H:i') }}</td>
                             </tr>

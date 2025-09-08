@@ -1,3 +1,5 @@
+<!-- @extends('layouts.user')
+@section('content')
 <div class="oops-wrapper">
     {{-- Elemen dekorasi --}}
     <div class="floating-shapes">
@@ -101,3 +103,5 @@
         .error-message { font-size: 14px; }
     }
 </style>
+
+@endsection -->
