@@ -46,5 +46,12 @@
         <span class="hide-menu">Saran & Kritik</span>
       </a>
     </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link {{ request()->routeIs('admin.rekening.*') ? 'bg-primary text-white rounded' : '' }}"
+         href="{{ route('admin.rekening.index') }}">
+        <span><i class="ti ti-message-dots"></i></span>
+        <span class="hide-menu">Rekening</span>
+      </a>
+    </li>
   </ul>
 </nav>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('kebersihan')->default(0);
             $table->date('tanggal');
             $table->enum('status', ['belum terbayar', 'pembayaran berhasil'])->default('belum terbayar');
+            $table->string('bukti_pembayaran')->nullable();
             $table->integer('total')->default(0);
             $table->timestamps();
         });

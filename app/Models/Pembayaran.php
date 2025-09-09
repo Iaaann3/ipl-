@@ -19,6 +19,7 @@ class Pembayaran extends Model
         'kebersihan',
         'tanggal',
         'status',
+        'bukti_pembayaran',
         'total',
     ];
 

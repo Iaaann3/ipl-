@@ -19,8 +19,10 @@ class GeneratePembayaran extends Command
         foreach ($users as $user) {
             // cek apakah user sudah punya tagihan bulan ini
             $exists = Pembayaran::where('id_user', $user->id)
-                ->whereDate('tanggal', $today)
-                ->exists();
+    ->whereMonth('tanggal', now()->month)
+    ->whereYear('tanggal', now()->year)
+    ->exists();
+
 
             if (! $exists) {
                 Pembayaran::create([

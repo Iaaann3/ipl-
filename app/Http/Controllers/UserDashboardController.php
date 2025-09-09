@@ -1,8 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Pembayaran;
+use App\Models\Rekening;
+use App\Models\Pembayaran; // contoh kalau belum ada
+use App\Models\Iklan;
 use App\Models\Pengumuman;
+
 
 use Illuminate\Support\Facades\Auth;
 
@@ -27,8 +30,8 @@ class UserDashboardController extends Controller
         return view('users.home.index', [
             'pengumuman' => $pengumuman,
             'tagihan' => $tagihan,
-
-            'tagihan' => $tagihan,
+            'totalPembayaran' => $totalPembayaran,
+            'rekenings' => Rekening::all()  ,
         ]);
     }
     

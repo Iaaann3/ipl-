@@ -1,16 +1,20 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\IklanController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\UserIklanController;
 use App\Http\Controllers\UserKegiatanController;
 use App\Http\Controllers\UserPembayaranController;
 use App\Http\Controllers\UserPengumumanController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RekeningController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -26,14 +30,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group([
     'prefix'     => 'admin',
     'as'         => 'admin.',
-    'middleware' => ['auth', IsAdmin::class],
+    'middleware' => ['auth:admin'],
 ], function () {
     Route::resource('pembayaran', PembayaranController::class);
     Route::resource('iklan', IklanController::class);
     Route::resource('pengumuman', PengumumanController::class);
     Route::resource('kegiatan', KegiatanController::class);
     Route::resource('saran', KritikSaranController::class);
+    Route::patch('pembayaran/{id}/konfirmasi', [PembayaranController::class, 'konfirmasi'])->name('admin.pembayaran.konfirmasi');
+    Route::resource('rekening', RekeningController::class);
 });
+    Route::get('login/admin', [AdminController::class, 'showLoginForm'])->name('admin.login.form');
+    Route::post('login/admin', [AdminController::class, 'login'])->name('admin.login');
+
 
 // ================= User Routes =================
 Route::group([
@@ -64,20 +73,19 @@ Route::group([
     Route::post('/pembayaran/{id}/bayar', [App\Http\Controllers\UserPembayaranController::class, 'bayar'])
         ->name('pembayaran.bayar');
 
-
     // Kegiatan
     Route::get('/kegiatan', [UserKegiatanController::class, 'index'])
         ->name('kegiatan.index');
 
-        Route::get('/kegiatan/{id}', [UserKegiatanController::class, 'show'])
-    ->name('kegiatan.show');
+    Route::get('/kegiatan/{id}', [UserKegiatanController::class, 'show'])
+        ->name('kegiatan.show');
 
 // Pengumuman
     Route::get('/pengumuman', [UserPengumumanController::class, 'index'])
         ->name('pengumuman.index');
 
-        Route::get('/pengumuman/{id}', [UserPengumumanController::class, 'show'])
-    ->name('pengumuman.show');
+    Route::get('/pengumuman/{id}', [UserPengumumanController::class, 'show'])
+        ->name('pengumuman.show');
 
 // Profile
     Route::get('/my-profile', [UserProfileController::class, 'index'])
@@ -90,4 +98,9 @@ Route::group([
         ->name('saran.store');
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+    Route::get('/iklan', [UserIklanController::class, 'index'])->name('user.iklan.index');
+    Route::get('/iklan/{id}', [UserIklanController::class, 'show'])->name('user.iklan.show');
+
 });
+Route::get('login/user', [UserController::class, 'showLoginForm'])->name('user.login.form');
+Route::post('login/user', [UserController::class, 'login'])->name('user.login');
