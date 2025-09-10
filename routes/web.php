@@ -39,6 +39,8 @@ Route::group([
     Route::resource('saran', KritikSaranController::class);
     Route::patch('pembayaran/{id}/konfirmasi', [PembayaranController::class, 'konfirmasi'])->name('admin.pembayaran.konfirmasi');
     Route::resource('rekening', RekeningController::class);
+    Route::post('/admin/pembayaran/{id}/upload-bukti', [PembayaranController::class, 'uploadBukti'])
+    ->name('admin.pembayaran.upload');
 });
     Route::get('login/admin', [AdminController::class, 'showLoginForm'])->name('admin.login.form');
     Route::post('login/admin', [AdminController::class, 'login'])->name('admin.login');
@@ -100,6 +102,9 @@ Route::group([
 
     Route::get('/iklan', [UserIklanController::class, 'index'])->name('user.iklan.index');
     Route::get('/iklan/{id}', [UserIklanController::class, 'show'])->name('user.iklan.show');
+
+    Route::post('/user/pembayaran/{id}/upload-bukti', [UserPembayaranController::class, 'bayar'])
+    ->name('user.pembayaran.upload');
 
 });
 Route::get('login/user', [UserController::class, 'showLoginForm'])->name('user.login.form');

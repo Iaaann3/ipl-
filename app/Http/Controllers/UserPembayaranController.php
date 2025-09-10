@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pembayaran;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class UserPembayaranController extends Controller
 {
@@ -40,17 +41,30 @@ class UserPembayaranController extends Controller
         return view('users.pembayaran.detail', compact('pembayaran'));
     }
 
-    public function bayar($id)
-    {
-       $pembayaran = Pembayaran::findOrFail($id);
+   
+public function bayar(Request $request, $id)
+{
+    $request->validate([
+        'rekening_id' => 'required|exists:rekenings,id',
+        'bukti_pembayaran' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
 
-        if ($pembayaran->status !== 'pembayaran berhasil') {
-            $pembayaran->status = 'pembayaran berhasil';
-            $pembayaran->save();
-        }
+    $pembayaran = Pembayaran::where('id', $id)
+    ->where('id_user', Auth::id())
+    ->firstOrFail();
 
-        return response()->json(['success' => true]);
+
+    if ($request->hasFile('bukti_pembayaran')) {
+        $file = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
+        $pembayaran->bukti_pembayaran = $file;
     }
+
+    $pembayaran->rekening_id = $request->rekening_id;
+    $pembayaran->status = 'menunggu konfirmasi';
+    $pembayaran->save();
+
+    return response()->json(['success' => true, 'message' => 'Bukti pembayaran berhasil diupload']);
+}
 
     
 }

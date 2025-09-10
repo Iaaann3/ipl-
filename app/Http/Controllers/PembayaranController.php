@@ -125,14 +125,36 @@ class PembayaranController extends Controller
             ], 500);
         }
     }
-    public function konfirmasi($id)
-    {
-        $pembayaran = Pembayaran::findOrFail($id);
-        $pembayaran->update([
-            'status' => 'pembayaran berhasil',
+    public function uploadBukti(Request $request, $id)
+{
+    try {
+        $request->validate([
+            'rekening_id' => 'required|exists:rekenings,id',
+            'bukti_pembayaran' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        return redirect()->route('admin.pembayaran.index')->with('success', 'Pembayaran berhasil dikonfirmasi.');
+        $pembayaran = Pembayaran::findOrFail($id);
+
+        if ($request->hasFile('bukti_pembayaran')) {
+            $file = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
+            $pembayaran->bukti_pembayaran = $file;
+        }
+
+        $pembayaran->rekening_id = $request->rekening_id;
+        $pembayaran->status = 'menunggu konfirmasi';
+        $pembayaran->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Bukti pembayaran berhasil dikirim, menunggu konfirmasi admin.'
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ], 500);
     }
+}
 
 }
